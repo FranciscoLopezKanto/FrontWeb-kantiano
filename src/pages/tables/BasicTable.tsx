@@ -1,5 +1,12 @@
 import React from "react";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@aws-amplify/ui-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Button,
+} from "@aws-amplify/ui-react";
 
 import "./Table.css";
 
@@ -13,10 +20,17 @@ export interface Medico {
 
 export interface MedicosTableProps {
   medicos?: Medico[];
+  onEdit?: (id: number) => void; // Función para manejar la edición de un médico
 }
 
-const BasicTable = (props: MedicosTableProps) => {
-  const { medicos } = props;
+const BasicTable: React.FC<MedicosTableProps> = (props) => {
+  const { medicos, onEdit } = props;
+
+  const handleEditClick = (id: number) => {
+    if (onEdit) {
+      onEdit(id);
+    }
+  };
 
   return (
     <>
@@ -28,6 +42,7 @@ const BasicTable = (props: MedicosTableProps) => {
             <TableCell as="th">Email</TableCell>
             <TableCell as="th">Especialidad</TableCell>
             <TableCell as="th">Imagen</TableCell>
+            <TableCell as="th">Acciones</TableCell> {/* Columna para acciones */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -44,6 +59,9 @@ const BasicTable = (props: MedicosTableProps) => {
                     src={`https://i.pravatar.cc/50?img=${medico.id}`}
                     alt="profile"
                   ></img>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => handleEditClick(medico.id)}>Editar</Button>
                 </TableCell>
               </TableRow>
             );

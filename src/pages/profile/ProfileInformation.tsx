@@ -88,7 +88,7 @@ const ProfileInformation = () => {
         especialidad: userType === "profesional" && editForm.especialidad !== userInfo.especialidad ? editForm.especialidad : undefined,
         password: editForm.password ? editForm.password : undefined,
       };
-
+      
       axios
         .patch(editEndpoint, updatedData, {
           headers: {

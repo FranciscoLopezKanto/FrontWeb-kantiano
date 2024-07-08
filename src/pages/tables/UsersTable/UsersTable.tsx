@@ -5,6 +5,7 @@ import {
   TableBody,
   TableHead,
   TableRow,
+  Button,
 } from "@aws-amplify/ui-react";
 import "./UserTable.css";
 
@@ -14,15 +15,22 @@ export interface User {
   apellido: string;
   direccion: string;
   seguroMedico: string;
-  rut:string;
+  rut: string;
 }
 
 export interface UsersTableProps {
   users?: User[];
+  onEdit?: (id: number) => void; // Función para manejar la edición de un usuario
 }
 
-const UsersTable = (props: UsersTableProps) => {
-  const { users } = props;
+const UsersTable: React.FC<UsersTableProps> = (props) => {
+  const { users, onEdit } = props;
+
+  const handleEditClick = (id: number) => {
+    if (onEdit) {
+      onEdit(id);
+    }
+  };
 
   return (
     <>
@@ -34,6 +42,7 @@ const UsersTable = (props: UsersTableProps) => {
             <TableCell as="th">Rut</TableCell>
             <TableCell as="th">Dirección</TableCell>
             <TableCell as="th">Seguro Médico</TableCell>
+            <TableCell as="th">Acciones</TableCell> {/* Columna para acciones */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -45,6 +54,9 @@ const UsersTable = (props: UsersTableProps) => {
                 <TableCell>{item.rut}</TableCell>
                 <TableCell>{item.direccion}</TableCell>
                 <TableCell>{item.seguroMedico}</TableCell>
+                <TableCell>
+                  <Button onClick={() => handleEditClick(item.id)}>Editar</Button>
+                </TableCell>
               </TableRow>
             );
           })}

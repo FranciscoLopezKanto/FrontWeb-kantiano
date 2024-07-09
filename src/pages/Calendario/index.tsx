@@ -14,15 +14,11 @@ const CalendarioPage: React.FC = () => {
     setStep('calendar');
   };
 
-  const handleDateSelect = (date: string, horarios: any[]) => {
+  const handleDateSelect = async (date: string) => {
     setSelectedDate(date);
-    setHorariosDisponibles(horarios);
-    setStep('horarios');
-  };
 
-  const handleReserva = async (hora: string, emailProfesional: string) => {
     try {
-      const response = await fetch('https://refactored-space-goggles-qgg469qvxqqfjqv-3000.app.github.dev/api/v1/citas/agendar', {
+      const response = await fetch('https://refactored-space-goggles-qgg469qvxqqfjqv-3000.app.github.dev/api/v1/citas/buscarH', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,19 +27,14 @@ const CalendarioPage: React.FC = () => {
           especialidad: formData.especialidad,
           tipoCita: formData.tipoCita,
           horarioPreferido: formData.horario,
-          fechaSeleccionada: selectedDate,
-          horaSeleccionada: hora,
-          emailProfesional,
+          fechaSeleccionada: date,
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        alert('Consulta agendada con éxito');
-        setStep('form');
-        setFormData(null);
-        setSelectedDate('');
-        setHorariosDisponibles([]);
+        setHorariosDisponibles(data.horariosDisponibles);
+        setStep('horarios');
       } else {
         alert(data.message || 'Algo salió mal');
       }
@@ -52,10 +43,20 @@ const CalendarioPage: React.FC = () => {
     }
   };
 
+
+  const handleBack = () => {
+    if (step === 'horarios') {
+      setStep('calendar');
+    } else if (step === 'calendar') {
+      setStep('form');
+    }
+  };
+
   return (
     <div>
+      {step !== 'form' && <button onClick={handleBack}>Atrás</button>}
       {step === 'form' && <FormComponent onSubmit={handleFormSubmit} />}
-      {step === 'calendar' && formData && (
+      {step === 'calendar' && (
         <CalendarComponent
           fechasDisponibles={formData.fechasDisponibles}
           onDateSelect={handleDateSelect}
@@ -66,7 +67,6 @@ const CalendarioPage: React.FC = () => {
         <HorariosDisponiblesComponent
           selectedDate={selectedDate}
           horariosDisponibles={horariosDisponibles}
-          onReserva={handleReserva}
         />
       )}
     </div>

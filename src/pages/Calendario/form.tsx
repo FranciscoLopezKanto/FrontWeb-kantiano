@@ -59,15 +59,61 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
     }
   };
 
+  const containerStyle = {
+    fontFamily: 'Arial, sans-serif',
+    padding: '20px',
+    border: '1px solid #00bfff',
+    borderRadius: '10px',
+    backgroundColor: '#e0f7ff',
+    maxWidth: '400px',
+    margin: '50px auto 0 auto',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  };
+
+  const labelStyle = {
+    display: 'block',
+    margin: '10px 0 5px 0',
+    fontWeight: 'bold',
+    color: '#007acc',
+  };
+
+  const selectStyle = {
+    width: '100%',
+    padding: '8px',
+    margin: '5px 0 15px 0',
+    borderRadius: '5px',
+    border: '1px solid #00bfff',
+    backgroundColor: '#fff',
+  };
+
+  const radioContainerStyle = {
+    display: 'flex',
+    justifyContent: 'space-around',
+    margin: '10px 0',
+  };
+
+  const buttonStyle = {
+    display: 'block',
+    width: '100%',
+    padding: '10px',
+    backgroundColor: '#00bfff',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+  };
+
   return (
-    <div>
-      <h2>Formulario de Citas</h2>
+    <div style={containerStyle}>
+      <h2 style={{ textAlign: 'center', color: '#007acc' }}>Formulario de Citas</h2>
       <div>
-        <label>
+        <label style={labelStyle}>
           Especialidad
           <select
             value={especialidad}
             onChange={(e) => setEspecialidad(e.target.value)}
+            style={selectStyle}
           >
             <option value="" disabled>Selecciona una especialidad</option>
             {especialidades.map((esp) => (
@@ -77,11 +123,12 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
         </label>
       </div>
       <div>
-        <label>
+        <label style={labelStyle}>
           Tipo de Cita
           <select
             value={tipoCita}
             onChange={(e) => setTipoCita(e.target.value)}
+            style={selectStyle}
           >
             <option value="" disabled>Selecciona un tipo de cita</option>
             {tiposCita.map((tipo) => (
@@ -91,9 +138,9 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
         </label>
       </div>
       <div>
-        <label>
+        <label style={labelStyle}>
           Horario
-          <div>
+          <div style={radioContainerStyle}>
             <label>
               <input
                 type="radio"
@@ -115,7 +162,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           </div>
         </label>
       </div>
-      <button onClick={handleFormSubmit}>Enviar</button>
+      <button onClick={handleFormSubmit} style={buttonStyle}>Enviar</button>
     </div>
   );
 };

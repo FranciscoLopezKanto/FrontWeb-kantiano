@@ -15,12 +15,13 @@ export interface User {
   apellido: string;
   direccion: string;
   seguroMedico: string;
+  email:string;
   rut: string;
 }
 
 export interface UsersTableProps {
   users?: User[];
-  onEdit?: (id: number) => void; // Función para manejar la edición de un usuario
+  onEdit?: (id: number) => void; 
 }
 
 const UsersTable: React.FC<UsersTableProps> = (props) => {
@@ -39,7 +40,7 @@ const UsersTable: React.FC<UsersTableProps> = (props) => {
           <TableRow>
             <TableCell as="th">Nombre</TableCell>
             <TableCell as="th">Apellido</TableCell>
-            <TableCell as="th">Rut</TableCell>
+            <TableCell as="th">Correo</TableCell>
             <TableCell as="th">Dirección</TableCell>
             <TableCell as="th">Seguro Médico</TableCell>
             <TableCell as="th">Acciones</TableCell> {/* Columna para acciones */}
@@ -51,7 +52,7 @@ const UsersTable: React.FC<UsersTableProps> = (props) => {
               <TableRow key={item.id}>
                 <TableCell>{item.nombre}</TableCell>
                 <TableCell>{item.apellido}</TableCell>
-                <TableCell>{item.rut}</TableCell>
+                <TableCell>{item.email}</TableCell>
                 <TableCell>{item.direccion}</TableCell>
                 <TableCell>{item.seguroMedico}</TableCell>
                 <TableCell>

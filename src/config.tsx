@@ -84,12 +84,12 @@ export const getAppNavs = (userType: string | null) => {
         eventKey: "Reservas",
         icon: <Icon as={MdEditCalendar} />,
         title: "Reservas",
-        to: "/",
+        to: "/reserva",
         children: [
           {
             eventKey: "basic-table",
             title: "Crear Reserva",
-            to: "/calendario",
+            to: "/reserva",
           },
         ],
       },

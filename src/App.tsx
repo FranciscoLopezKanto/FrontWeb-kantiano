@@ -11,7 +11,7 @@ import Profile from "./pages/profile";
 import Tables from "./pages/tables";
 import UsersTable from "./pages/tables/UsersTablePage";
 import { Forms, Forms2 } from "./pages/forms";
-import EditForm from "./pages/forms/HorasForm";
+import HorasForm from "./pages/forms/HorasForm";
 import Login from "./pages/login";
 import CalendarioPage from "./pages/Calendario";
 //import HorariosDisponiblesScreen from "./pages/Calendario/HorariosDispo";
@@ -46,9 +46,9 @@ const App: React.FC = () => {
           <Route path="/login" element={<Centered><Login /></Centered>} />
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
-            <Route path="forms" element={<Forms />} />
-            <Route path="forms2" element={<Forms2 />} />
-            <Route path="edit-form" element={<EditForm />} />
+            <Route path="AgregarPaciente" element={<Forms />} />
+            <Route path="AgregarDoctor" element={<Forms2 />} />
+            <Route path="HorasForm" element={<HorasForm />} />
             <Route path="tables" element={<Tables />} />
             <Route path="users-table" element={<UsersTable />} />
             <Route path="profile" element={<Profile />} />

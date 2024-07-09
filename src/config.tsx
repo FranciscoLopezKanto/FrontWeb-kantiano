@@ -120,17 +120,17 @@ export const getAppNavs = (userType: string | null) => {
           {
             eventKey: "form-basic",
             title: "Agregar Paciente",
-            to: "/forms",
+            to: "/AgregarPaciente",
           },
           {
             eventKey: "form-basic2",
             title: "Agregar Médico",
-            to: "/forms2",
+            to: "/AgregarDoctor",
           },
           {
             eventKey: "form-wizard",
-            title: "Edit Form",
-            to: "/edit-form",
+            title: "Asignar Horas",
+            to: "/HorasForm",
           },
         ],
       },

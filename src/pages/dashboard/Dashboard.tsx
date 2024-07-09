@@ -116,7 +116,7 @@ const Dashboard = () => {
             />
           </View>
 
-          <View columnSpan={[1, 1, 1, 2]} rowSpan={{ base: 3, large: 4 }}>
+          <View columnSpan={[1, 1, 1, 2]} rowSpan={{ base: 3, large: 6 }}>
             <Card borderRadius="15px">
               <div className="card-title">Trafico de citas medicas</div>
               <div className="chart-wrap">
@@ -179,7 +179,7 @@ const Dashboard = () => {
             </Card>
           </View>
           <View rowSpan={{ base: 1, large: 4 }}>
-            <Card height="100%" borderRadius="15px">
+            <Card height="100%" borderRadius="15px" width="100%">
               <div className="card-title">Doctores de Áreas Médicas</div>
               <div className="chart-wrap">
                 {trafficSourceData ? (
@@ -190,7 +190,7 @@ const Dashboard = () => {
                     labels={trafficSourceData.map(item => item.name)}
                   />
                 ) : (
-                  <Flex direction="column" minHeight="285px">
+                  <Flex direction="column" minHeight="25px">
                     <Placeholder size="small" />
                     <Placeholder size="small" />
                     <Placeholder size="small" />
@@ -201,8 +201,8 @@ const Dashboard = () => {
             </Card>
           </View>
 
-          <View columnSpan={[1, 1, 1, 2]} rowSpan={{ base: 3, large: 4 }}>
-            <Card borderRadius="15px">
+          <View columnSpan={[1, 1, 1, 2]} rowSpan={{ base: 3, large: 6 }}>
+            <Card borderRadius="15px" width="100%">
               <div className="card-title">Sales Summary</div>
               <div className="chart-wrap">
                 {lineChartData ? (

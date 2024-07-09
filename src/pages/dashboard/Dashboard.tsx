@@ -51,12 +51,12 @@ const Dashboard = () => {
 
   const barChartData = [
     {
-      name: "Mobile apps",
-      data: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      name: "Reservas Por App Movil",
+      data: [100, 200, 300, 250, 200, 300, 400, 300, 300],
     },
     {
-      name: "Websites",
-      data: [150, 250, 350, 450, 550, 650, 750, 850, 950],
+      name: "Reservas Por Otro Medio",
+      data: [150, 150, 100, 150, 100, 75, 75, 60, 50],
     },
   ];
 

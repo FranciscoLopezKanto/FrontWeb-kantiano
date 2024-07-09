@@ -11,7 +11,7 @@ import Profile from "./pages/profile";
 import Tables from "./pages/tables";
 import UsersTable from "./pages/tables/UsersTablePage";
 import { Forms, Forms2 } from "./pages/forms";
-import EditForm from "./pages/forms/EditForm";
+import EditForm from "./pages/forms/HorasForm";
 import Login from "./pages/login";
 import CalendarioPage from "./pages/Calendario";
 //import HorariosDisponiblesScreen from "./pages/Calendario/HorariosDispo";

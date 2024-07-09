@@ -9,7 +9,7 @@ interface FormValues {
   email: string;
   password: string;
   tipoUsuario: string;
-  edad: string; // inicialmente string para el input
+  edad: number; // Cambiado a number
   apellido: string;
   direccion: string;
   rut: string;
@@ -22,7 +22,7 @@ const initialValues: FormValues = {
   email: "",
   password: "",
   tipoUsuario: "cliente",
-  edad: "",
+  edad: 0, // Valor inicial como número
   direccion: "",
   rut: "",
   seguroMedico: "",
@@ -37,7 +37,7 @@ const BasicForm2: React.FC = () => {
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value,
+      [name]: name === "edad" ? parseInt(value, 10) : value, // Convertir edad a número
     });
     setErrors({
       ...errors,
@@ -74,15 +74,8 @@ const BasicForm2: React.FC = () => {
 
     try {
       const apiUrl = `${process.env.REACT_APP_URL}api/v1/auth/register`;
-      console.log("Datos a enviar:", values);
-      console.log("URL de la API:", apiUrl);
-
-      const payload = {
-        ...values,
-        edad: parseInt(values.edad, 10) // Convertir edad a número
-      };
-
-      const response = await axios.post(apiUrl, payload);
+      console.log(values);
+      const response = await axios.post(apiUrl, values);
       
       console.log("Registro exitoso:", response.data);
       toast.success("Registro exitoso");
@@ -203,7 +196,7 @@ const BasicForm2: React.FC = () => {
           width={{ base: "100%", large: "50%" }}
           style={{ marginLeft: "auto" }}
         >
-          Registrarse
+          Registrar Paciente
         </Button>
       </Flex>
     </>

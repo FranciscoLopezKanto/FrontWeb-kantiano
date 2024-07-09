@@ -166,7 +166,7 @@ const BasicForm: React.FC = () => {
           width={{ base: "100%", large: "50%" }}
           style={{ marginLeft: "auto" }}
         >
-          Registrarse
+          Registrar Medico
         </Button>
       </Flex>
     </>

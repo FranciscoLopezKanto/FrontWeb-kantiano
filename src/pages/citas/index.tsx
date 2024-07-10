@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@aws-amplify/ui-react';
+import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@aws-amplify/ui-react';
 import Modal from 'react-modal';
-import './verCitas.css'; // Importa el archivo CSS
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './verCitas.css';
 
 interface Cita {
     id: number;
@@ -18,7 +21,6 @@ interface Cita {
 }
 
 const CitasPendientesTable = () => {
-    let doctor;
     const [citas, setCitas] = useState<Cita[]>([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedCita, setSelectedCita] = useState<Cita | null>(null);
@@ -49,37 +51,40 @@ const CitasPendientesTable = () => {
         fetchCitas();
     }, [fetchCitas]);
 
-    const handleFinalizarCita = async (id: number) => {
-        try {
-            const response = await fetch(`${apiUrl}/citas/${id}/estado`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    estado: 'Finalizada',
-                }),
-            });
-            if (response.ok) {
-                console.log(`Cita finalizada correctamente.`);
-                const updatedCitas = citas.filter(cita => cita.id !== id);
-                setCitas(updatedCitas);
-                openModal(); // Abrir el modal de confirmación
-            } else {
-                console.error('Error al finalizar la cita:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error en la conexión:', error);
-        }
-    };
-
-    const openModal = () => {
+    const handleEditClick = (cita: Cita) => {
+        setSelectedCita(cita);
         setModalIsOpen(true);
     };
 
     const closeModal = () => {
         setModalIsOpen(false);
+        setSelectedCita(null);
+    };
+
+    const handleConfirmClick = async () => {
+        if (!selectedCita) return;
+
+        try {
+            const response = await axios.put(`${apiUrl}/citas/${selectedCita.id}/estado`, {
+                estado: 'confirmada',
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200) {
+                toast.success('Cita actualizada con éxito');
+                fetchCitas(); // Vuelve a cargar las citas
+                closeModal();
+                setTimeout(() => { window.location.href = '/miscitas'; }, 2000);
+            } else {
+                toast.error('Error al actualizar la cita');
+            }
+        } catch (error) {
+            console.error('Error al actualizar la cita:', error);
+            toast.error('Error al actualizar la cita');
+        }
     };
 
     return (
@@ -117,46 +122,31 @@ const CitasPendientesTable = () => {
                                 {cita.profesional ? (
                                     `${cita.profesional.nombre || ''} ${cita.profesional.apellido || ''} - ${cita.profesional.especialidad || ''}`
                                 ) : (
-                                    doctor
+                                    'N/A'
                                 )}
                             </TableCell>
                             <TableCell>
-                                <button className="button-finalizar" onClick={() => {
-                                    setSelectedCita(cita);
-                                    openModal(); // Abrir modal al hacer clic en Finalizar
-                                }}>
-                                    Finalizar
-                                </button>
+                                <Button onClick={() => handleEditClick(cita)}>Editar</Button>
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
 
-            {/* Modal de confirmación */}
+            {/* Modal de edición */}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                contentLabel="Confirmar Finalización de Cita"
-                style={{
-                    overlay: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    },
-                    content: {
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)',
-                    },
-                }}
+                contentLabel="Editar Cita"
+                className="ModalContent"
+                overlayClassName="ModalBackground"
             >
+                <button className="close-button" onClick={closeModal}>&times;</button>
                 <div className="modal-header">
-                    <h2>Confirmar Finalización de Cita</h2>
+                    <h2>Editar Cita</h2>
                 </div>
                 {selectedCita && (
-                    <div className="modal-content">
+                    <div className="modal-body">
                         <p><strong>Fecha:</strong> {selectedCita.fecha}</p>
                         <p><strong>Hora:</strong> {selectedCita.hora}</p>
                         <p><strong>Tipo de Reserva:</strong> {selectedCita.tipoReserva}</p>
@@ -165,15 +155,12 @@ const CitasPendientesTable = () => {
                     </div>
                 )}
                 <div className="modal-buttons">
-                    <button className="button-confirmar" onClick={() => {
-                        handleFinalizarCita(selectedCita?.id || 0);
-                        closeModal();
-                    }}>
+                    <Button className="button-confirmar" onClick={handleConfirmClick}>
                         Confirmar
-                    </button>
-                    <button className="button-cancelar" onClick={closeModal}>
+                    </Button>
+                    <Button className="button-cancelar" onClick={closeModal}>
                         Cancelar
-                    </button>
+                    </Button>
                 </div>
             </Modal>
         </>

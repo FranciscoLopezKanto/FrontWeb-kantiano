@@ -55,12 +55,18 @@ export const getAppNavs = (userType: string | null) => {
         eventKey: "tables",
         icon: <Icon as={MdOutlineTableChart} />,
         title: "Personas",
-        to: "/tables",
+        to: "/users-table",
         children: [
+          
           {
             eventKey: "users",
             title: "Pacientes",
             to: "/users-table",
+          },
+        {
+          eventKey: "users",
+            title: "Ver Citas",
+            to: "/miscitas",
           },
         ],
       },
@@ -109,6 +115,7 @@ export const getAppNavs = (userType: string | null) => {
             title: "Pacientes",
             to: "/users-table",
           },
+          
         ],
       },
       {

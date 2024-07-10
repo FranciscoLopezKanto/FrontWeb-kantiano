@@ -14,6 +14,7 @@ import { Forms, Forms2 } from "./pages/forms";
 import HorasForm from "./pages/forms/HorasForm";
 import Login from "./pages/login";
 import CalendarioPage from "./pages/Calendario";
+import MisCitasPage from "./pages/citas";
 //import HorariosDisponiblesScreen from "./pages/Calendario/HorariosDispo";
 
 const Centered: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -52,6 +53,7 @@ const App: React.FC = () => {
             <Route path="tables" element={<Tables />} />
             <Route path="users-table" element={<UsersTable />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="miscitas" element={<MisCitasPage/>} />
             <Route path="reserva" element={<CalendarioPage />} />
             <Route path="*" element={<NoMatch />} />
           </Route>

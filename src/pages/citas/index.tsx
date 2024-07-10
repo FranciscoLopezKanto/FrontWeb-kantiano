@@ -66,7 +66,7 @@ const CitasPendientesTable = () => {
 
         try {
             const response = await axios.put(`${apiUrl}/citas/${selectedCita.id}/estado`, {
-                estado: 'confirmada',
+                estado: 'Finalizada',
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,

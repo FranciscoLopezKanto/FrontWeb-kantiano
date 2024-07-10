@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@aws-amplify/ui-react';
 import Modal from 'react-modal';
 import './verCitas.css'; // Importa el archivo CSS
@@ -26,11 +26,7 @@ const CitasPendientesTable = () => {
     const token = localStorage.getItem('token');
     const apiUrl = 'https://refactored-space-goggles-qgg469qvxqqfjqv-3000.app.github.dev/api/v1';
 
-    useEffect(() => {
-        fetchCitas();
-    }, [token, includeFinalizadas]); // Actualizar cuando cambie el token o el estado de incluir finalizadas
-
-    const fetchCitas = async () => {
+    const fetchCitas = useCallback(async () => {
         try {
             const endpoint = includeFinalizadas ? `${apiUrl}/citas/todasP` : `${apiUrl}/citas/pendientes`;
             const response = await fetch(endpoint, {
@@ -40,7 +36,6 @@ const CitasPendientesTable = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                
                 setCitas(data);
             } else {
                 console.error('Error al obtener citas:', response.statusText);
@@ -48,7 +43,11 @@ const CitasPendientesTable = () => {
         } catch (error) {
             console.error('Error en la conexión:', error);
         }
-    };
+    }, [token, includeFinalizadas, apiUrl]);
+
+    useEffect(() => {
+        fetchCitas();
+    }, [fetchCitas]);
 
     const handleFinalizarCita = async (id: number) => {
         try {
@@ -120,7 +119,6 @@ const CitasPendientesTable = () => {
                                 ) : (
                                     doctor
                                 )}
-                                
                             </TableCell>
                             <TableCell>
                                 <button className="button-finalizar" onClick={() => {
